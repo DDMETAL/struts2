@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 从Struts-2.5.dtd文件中复制DOCTYPE -->
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<!-- 用来定义“包”，定义第一层web路径 -->
+	<!-- extends="struts-defalut" 自动继承了struts-defalut.xml中定义的环境信息 -->
+	<package namespace="/demo" name="demo" extends="struts-default">
+		<!-- 在package中定义url与控制器和视图的对应关系
+			哪个url被哪个控制器处理，返回结果映射到哪个jsp视图	
+		 -->
+		 <!-- 请求url:demo/hello.action 
+		 	由DemoAction的execute方法处理url
+		 -->
+		 <action name="hello" class="com.dmetal.ssh.action.DemoAction">
+		 	<!-- result用来约定 控制器返回结果和视图对应关系 
+		 		success对应demo.jsp
+		 	-->
+		 	<result name="success">
+		 		/WEB-INF/jsp/demo.jsp
+		 	</result>
+		 </action>
+		 
+		 <action name="test" class="com.dmetal.ssh.action.TestAction">
+		 	<result name="success">
+		 		/WEB-INF/jsp/demo.jsp
+		 	</result>
+		 </action>
+		 
+		 <action name="msg" class="com.dmetal.ssh.action.MessageAction">
+		 	<result name="success">
+		 		/WEB-INF/jsp/show.jsp
+		 	</result>
+		 </action>
+		 
+		 <!-- class属性的值使用spring bean ID 时，就可以从spring中获取控制器Bean对象 -->
+		 <action name="spring" class="springAction">
+		 	<result name="success">
+		 		/WEB-INF/jsp/demo.jsp
+		 	</result>
+		 </action>
+		 <!-- 重定向 -->
+		 <action name="result" class="resultAction">
+		 	<result name="success" type="redirect">
+		 		<param name="location">https://www.baidu.com</param>
+		 		<param name="parse">false</param>
+		 		<param name="anchor">FRAGMENT</param>
+		 	</result>
+		 </action>
+		 <!-- 流 -->
+		 <action name="image" class="imageAction">
+		 	<result name="success" type="stream">
+		 		<param name="contentType">image/png</param>
+		 		<param name="inputName">img</param>
+		 	</result>
+		 </action>
+	</package>
+	<!-- 重定向到另一个控制器 -->
+	<package namespace="/reda" name="reda" extends="struts-default">
+		<action name="reda" class="redAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">result</param>
+				<param name="namespace">/demo</param>
+			</result>
+		</action>
+	</package>
+	<!-- json -->
+	<package namespace="/ajax" name="ajax" extends="json-default">
+		<!-- result type=json -->
+		<action name="bean" class="beanAction">
+			<!-- 默认情况下，json result将Action对象整体作为javabean，转换为json字符串发送到浏览器端.Action的bean属性转换为json属性 -->
+			<result name="success" type="json">
+			</result>
+		</action>
+		
+		<action name="root" class="rootAction">
+			<result name="success" type="json">
+				<!-- 将控制器中的jsonResult属性序列化为json发送到浏览器 -->
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
+	</package>
+	<package namespace="/user" name="user" extends="struts-default">
+		<action name="add" method="add" class="com.dmetal.ssh.action.UserAction">
+			<result name="success">
+		 		/WEB-INF/jsp/demo.jsp
+		 	</result>
+		</action>
+	</package>
+	
+</struts>

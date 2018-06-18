@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- 数据库连接参数 -->
+		<property name="connection.driver_class">
+			com.mysql.jdbc.Driver
+		</property>
+		<property name="connection.url">
+			jdbc:mysql://localhost:3306/ssh
+		</property>
+		<property name="connection.username">
+			root
+		</property>
+		<property name="connection.password">
+			a1234
+		</property>
+		<!-- 配置数据库方言(dialect) MySQL方言-->
+		<property name="dialect">
+			org.hibernate.dialect.MySQLDialect
+		</property>
+		<!-- 配置调试参数 显示生成的SQL -->
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+		
+		<!-- 配置子配置文件(映射文件) -->
+		<mapping resource="hbm/User.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>
